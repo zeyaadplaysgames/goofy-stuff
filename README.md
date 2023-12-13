@@ -11,4 +11,4 @@ Random stuff I upload,ranging from:
 
 
 
-note: feel free to use my buggy programs but just credit me :P
+note: feel free to use my buggy programs but just credit me (you know who your are) :P
