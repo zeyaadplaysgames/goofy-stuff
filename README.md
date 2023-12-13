@@ -7,9 +7,8 @@ Random stuff I upload,ranging from:
 
 # Updates
 12/13/2023 6:58 AM
--I made a keylogger and added it here
+-I made a keylogger (in python) and added it here
 
 
 
-note:bassil if you find this (ik you will) dont credit this __ as yours :))
--yes i am paranoid
+note: feel free to use my buggy programs but just credit me :P
