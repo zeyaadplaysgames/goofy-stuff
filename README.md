@@ -5,6 +5,7 @@ Random stuff I upload,ranging from:
 -(maybe) some new projects ahead?
 -idk rly
 
+# Updates
 12/13/2023 6:58 AM
 -I made a keylogger and added it here
 
