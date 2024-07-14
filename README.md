@@ -7,10 +7,15 @@ Random stuff I upload,ranging from:
 
 # Updates
 12/13/2023 6:58 AM
--I made a keylogger (in python) and added it here
+
+-I made a program that detects keyboard input (pretty horrid tbh) and added itr here
 
 8/1/2024 (happy new year?)
 
 -made a program that converts images into text (might add color later)
 
-note: feel free to use my buggy programs but just credit me (you know who your are) :P
+7/14/2024 1:08 PM
+
+Added an autoenum.py script i use in CTFs,might add more functions like nikto in it later
+
+feel free to use my horrible projects :)
