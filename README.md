@@ -2,8 +2,8 @@
 
 this repo is full of random stuff I upload,ranging from:
 
-*random hacking or python-related scripts  
-*(maybe) some new projects ahead?
+* random hacking or python-related scripts  
+* (maybe) some new projects ahead?
 
 
 # Updates  
