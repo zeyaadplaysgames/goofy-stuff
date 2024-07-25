@@ -12,13 +12,15 @@ def check_handshake(pcap_file):
     return 'EAPOL' in result.stdout.decode()
 
 def install_package(package):
-     try:
+    """Install a package using apt-get (for Debian-based systems). Modify as needed."""
+    try:
         subprocess.run(['apt-get', 'install', '-y', package], check=True)
     except subprocess.CalledProcessError as e:
         print(f'Error installing {package}: {e}')
         sys.exit(1)
 
 def check_program_installed(program):
+    """Check if a program is installed on the system. Install if missing."""
     try:
         subprocess.run(['which', program], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         return True
@@ -149,4 +151,10 @@ def main():
                 print('Skipping password cracking.')
                 break
             else:
-                
+                print('Invalid option. Please enter y or n.')
+    else:
+        print('No handshake detected.')
+
+if __name__ == '__main__':
+    main()
+#Tasneem will you marry me :)
