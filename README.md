@@ -29,6 +29,11 @@ this repo is full of random stuff I upload,ranging from:
 
 * made a wifi hacking script in python. It lets you capture and attempt to crack wpa handshakes.
 
+### 10/8/2024 6:01 PM
+
+- remade the whole autoenum.py script into autenum.sh, made it easier to use and update, as well as added different features in it like nikto and enum4linux.
+
+
 hope someone can find these scripts useful :)
 
 P.S. I am not responsible for any legal trouble caused by you hacking or abusing these scripts.  
