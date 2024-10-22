@@ -38,6 +38,11 @@ this repo is full of random stuff I upload,ranging from:
 - made a cool calculator that does basic conversion of units, allows you to freely run your own operations and run basic trigonometric calculations :D
 - i did this mostly to automate doing homework lol
 - will be less updates as im back to school
+
+#### 22/10/2024 8:19 PM
+- added a feature to the keylogger that uses HTTP requests to send keylogs to a web server (very cool)
+- might continue adding features to it
+
 hope someone can find these scripts useful :)
 
 P.S. I am not responsible for any legal trouble caused by you hacking or abusing these scripts.  
